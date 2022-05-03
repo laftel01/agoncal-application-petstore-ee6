@@ -38,7 +38,6 @@ public class CartItem {
     // =   Methods hash, equals, toString   =
     // ======================================
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
