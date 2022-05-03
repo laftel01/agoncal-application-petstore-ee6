@@ -4,6 +4,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -12,6 +13,7 @@ import lombok.Setter;
  *         --
  */
 
+@RequiredArgsConstructor
 public class CartItem {
 
     // ======================================
@@ -23,15 +25,6 @@ public class CartItem {
     @NotNull
     @Min(1)
     @Getter @Setter private Integer quantity;
-
-    // ======================================
-    // =            Constructors            =
-    // ======================================
-
-    public CartItem(Item item, Integer quantity) {
-        this.item = item;
-        this.quantity = quantity;
-    }
 
     // ======================================
     // =              Public Methods        =
