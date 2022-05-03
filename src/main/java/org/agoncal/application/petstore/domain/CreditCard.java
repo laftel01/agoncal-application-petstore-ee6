@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import lombok.Setter;
  */
 
 @RequiredArgsConstructor
+@EqualsAndHashCode
 @Embeddable
 public class CreditCard {
 
@@ -32,10 +34,12 @@ public class CreditCard {
     @Column(name = "credit_card_type")
     @NotNull
     @Enumerated(EnumType.STRING)
+    @EqualsAndHashCode.Exclude
     @Getter @Setter private CreditCardType creditCardType;
     @Column(name = "credit_card_expiry_date", length = 5)
     @NotNull
     @Size(min = 1, max = 5)
+    @EqualsAndHashCode.Exclude
     @Getter @Setter private String creditCardExpDate;
 
     // ======================================
@@ -45,26 +49,9 @@ public class CreditCard {
     public CreditCard() {
     }
 
-    // ======================================
-    // =   Methods hash, equals, toString   =
-    // ======================================
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CreditCard)) return false;
-
-        CreditCard that = (CreditCard) o;
-
-        if (!creditCardNumber.equals(that.creditCardNumber)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return creditCardNumber.hashCode();
-    }
+    // =======================================
+    // =           Method toString           =
+    // =======================================
 
     @Override
     public String toString() {
