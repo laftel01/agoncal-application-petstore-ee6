@@ -2,6 +2,7 @@ package org.agoncal.application.petstore.domain;
 
 import org.agoncal.application.petstore.constraint.NotEmpty;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,7 @@ import java.util.List;
         @NamedQuery(name = Category.FIND_ALL, query = "SELECT c FROM Category c")
 })
 @XmlRootElement
+@EqualsAndHashCode
 public class Category {
 
     // ======================================
@@ -35,6 +37,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Exclude
     @Getter private Long id;
     @Column(nullable = false, length = 30)
     @NotNull
@@ -42,11 +45,13 @@ public class Category {
     @Getter @Setter private String name;
     @Column(nullable = false)
     @NotEmpty
+    @EqualsAndHashCode.Exclude
     @Getter @Setter private String description;
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     @OrderBy("name ASC")
     @XmlTransient
-    @Getter @Setter private List<Product> products;
+    @EqualsAndHashCode.Exclude
+    @Getter @Setter List<Product> products;
 
     // ======================================
     // =             Constants              =
@@ -77,27 +82,10 @@ public class Category {
         products.add(product);
     }
     
-    // ======================================
-    // =   Methods hash, equals, toString   =
-    // ======================================
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Category)) return false;
-
-        Category category = (Category) o;
-
-        if (!name.equals(category.name)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
-
+    // =======================================
+    // =           Method toString           =
+    // =======================================
+    
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
